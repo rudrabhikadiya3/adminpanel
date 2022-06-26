@@ -31,11 +31,16 @@ export default function FormDialog() {
   });
 
 
-//   to local storage
-
+  //to local storage
   const toStorage = (values) =>{
-    let localData = JSON.parse(localStorage.getItem('login'));
-    
+    const localData = JSON.parse(localStorage.getItem('medicine'));
+
+    if (localData === null) {
+      localStorage.setItem('medicine', JSON.stringify([values]))
+    } else {
+      localData.push(values)
+      localStorage.setItem('medicine', JSON.stringify(localData))
+    }
   }
 
   const formik = useFormik({
@@ -48,6 +53,7 @@ export default function FormDialog() {
     validationSchema: schema,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      toStorage(values)
     },
   });
   const { handleSubmit, handleChange, errors, handleBlur, touched } = formik;
@@ -115,8 +121,8 @@ export default function FormDialog() {
                 <span className="error">{errors.quantity}</span>
               ) : null}
               <DialogActions>
-                <Button >Cancel</Button>
-                <Button  type="submit">Subscribe</Button>
+                <Button>Cancel</Button>
+                <Button type="submit">Subscribe</Button>
               </DialogActions>
             </DialogContent>
           </Form>
