@@ -8,6 +8,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as yup from "yup";
 import { useFormik, Form, Formik } from "formik";
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
@@ -35,6 +36,14 @@ export default function FormDialog() {
   const toStorage = (values) =>{
     const localData = JSON.parse(localStorage.getItem('medicine'));
 
+    const id = Math.floor(Math.random()*1000);
+    
+    let withIdData = {
+      id: id,
+      ...values
+    }
+    console.log(withIdData);
+    
     if (localData === null) {
       localStorage.setItem('medicine', JSON.stringify([values]))
     } else {
@@ -42,6 +51,27 @@ export default function FormDialog() {
       localStorage.setItem('medicine', JSON.stringify(localData))
     }
   }
+  
+// table
+const columns = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "price", headerName: "Name", width: 130 },
+  { field: "expiry", headerName: "Expiry", width: 130 },
+  { field: "quantity", headerName: "Quantity", width: 130 },
+  
+];
+
+const rows = [
+  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
+  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
+  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
+  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
+  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
+  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
+  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
+  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+];
 
   const formik = useFormik({
     initialValues: {
@@ -63,6 +93,15 @@ export default function FormDialog() {
       <Button variant="outlined" onClick={handleClickOpen}>
         List medicine
       </Button>
+      <div style={{ height: 400, width: '90%' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        />
+    </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>List medicine</DialogTitle>
         <Formik>
@@ -121,8 +160,8 @@ export default function FormDialog() {
                 <span className="error">{errors.quantity}</span>
               ) : null}
               <DialogActions>
-                <Button>Cancel</Button>
-                <Button type="submit">Subscribe</Button>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button type="submit">Add Medicine</Button>
               </DialogActions>
             </DialogContent>
           </Form>
