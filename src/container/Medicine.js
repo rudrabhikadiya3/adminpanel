@@ -57,6 +57,7 @@ export default function FormDialog() {
       loadData();
     },
   });
+  const { handleSubmit, handleChange, errors, handleBlur, touched } = formik;
 
   //to local storage
   const toStorage = (values) => {
@@ -68,7 +69,6 @@ export default function FormDialog() {
       id: id,
       ...values,
     };
-    console.log(withIdData);
 
     if (localData === null) {
       localStorage.setItem("medicine", JSON.stringify([withIdData]));
@@ -130,7 +130,7 @@ export default function FormDialog() {
   }
 
 
-  const { handleSubmit, handleChange, errors, handleBlur, touched } = formik;
+
   return (
     <div>
       <h1>Medicine</h1>
