@@ -1,4 +1,4 @@
-import * as React from "react";
+import {React, useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -11,19 +11,29 @@ import { useFormik, Form, Formik } from "formik";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [data, setData] = React.useState([]);
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [alertData, setAlertData] = useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
   };
+  const [dopen, setDOpen] = useState(false);
 
+  const handleDClickOpen = () => {
+    setDOpen(true);
+  };
+
+  const handleDClose = () => {
+    setDOpen(false);
+  }
   let schema = yup.object().shape({
     name: yup.string().required("Please enter name"),
     price: yup
@@ -32,6 +42,20 @@ export default function FormDialog() {
       .positive("price cant be in negative"),
     expiry: yup.string().required("Please enter expiry"),
     quantity: yup.string().required("Please enter quantity"),
+  });
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      price: "",
+      expiry: "",
+      quantity: "",
+    },
+    validationSchema: schema,
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      toStorage(values);
+      loadData();
+    },
   });
 
   //to local storage
@@ -62,13 +86,19 @@ export default function FormDialog() {
     { field: "expiry", headerName: "Expiry", width: 80 },
     { field: "quantity", headerName: "Quantity", width: 80 },
     {
-      
+      field: "manage",
       headerName: "Manage",
       width: 80,
       renderCell: (params) => (
-        <IconButton aria-label="delete">
+        <>
+        <IconButton aria-label="delete" onClick={()=>{handleDClickOpen(); setAlertData(params.id)}} >
           <DeleteIcon />
         </IconButton>
+
+        <IconButton aria-label="edit" onClick={handleDClickOpen} >
+          <EditIcon />
+        </IconButton>
+        </>
       ),
     },
   ];
@@ -79,25 +109,26 @@ export default function FormDialog() {
     if (localData !== null) {
       setData(localData);
     }
+    handleClose();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    
     loadData();
-  });
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      price: "",
-      expiry: "",
-      quantity: "",
-    },
-    validationSchema: schema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      toStorage(values);
-      loadData();
-    },
-  });
+
+  }, []);
+
+  const deletFunction = (params) =>{
+    let localData = JSON.parse(localStorage.getItem('medicine'));
+    let fData = localData.filter((i) => i.id !==  alertData);
+
+    setData(localData)
+
+    localStorage.setItem('medicine', JSON.stringify(fData))
+    loadData();
+    handleDClose()
+  }
+
 
   const { handleSubmit, handleChange, errors, handleBlur, touched } = formik;
   return (
@@ -181,6 +212,20 @@ export default function FormDialog() {
             </DialogContent>
           </Form>
         </Formik>
+      </Dialog>
+      {/* delet di */}
+      <Dialog
+        open={dopen}
+        // TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleDClose}>no</Button>
+          <Button onClick={deletFunction}>yes</Button>
+        </DialogActions>
       </Dialog>
     </div>
   );
