@@ -4,12 +4,10 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as yup from "yup";
 import "yup-phone";
 import { useFormik, Form, Formik } from "formik";
-import { TouchAppRounded } from "@mui/icons-material";
 
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -17,6 +15,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,46 +56,47 @@ export default function FormDialog() {
       // alert(JSON.stringify(values, null, 2));
       handleClose();
       dataInLocal(values);
+      listdata();
     },
   });
   const { handleBlur, handleChange, handleSubmit, touched, errors } = formik;
 
 
   const dataInLocal = (values) => {
-    let localData = JSON.parse(localStorage.getItem("patients"));
+    const localData = JSON.parse(localStorage.getItem("patients"));
 
+    const id = Math.floor(Math.random()*1000);
+    let dataWithId = {
+      id: id,
+      ...values
+    }
       if (localData === null) {
-        localStorage.setItem('patients',JSON.stringify([values]));
-        console.log(localData);
+        localStorage.setItem('patients',JSON.stringify([dataWithId]));
       } else {
-        localData.push(values);
-        localStorage.setItem('patient', JSON.stringify(localData));
-        console.log(localData);
+        localData.push(dataWithId);
+        localStorage.setItem('patients', JSON.stringify(localData));
       }
-    console.log(localData);
   };
 
+  const listdata = () =>{
+    const localData = JSON.parse(localStorage.getItem('patients'));
+    if (localData !== null) {
+      setData(localData)
+    }
+  }
+  useEffect(() =>{
+    listdata();
+  }, [])
   
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Name", width: 130 },
-    { field: "email", headerName: "Email", width: 130 },
-    { field: "phone", headerName: "Contact number", width: 130 },
-    { field: "age", headerName: "Age", width: 130 },
-    { field: "doctor", headerName: "Doctor name", width: 130 },
+    { field: "name", headerName: "Name", width: 150 },
+    { field: "email", headerName: "Email", width: 200 },
+    { field: "phone", headerName: "Contact number", width: 150 },
+    { field: "age", headerName: "Age", width: 150 },
+    { field: "doctor", headerName: "Doctor name", width: 150 },
   ];
   
-  const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  ];
 
   return (
     <>
@@ -183,7 +183,7 @@ export default function FormDialog() {
       </Dialog>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={rows}
+          rows={data}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

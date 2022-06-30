@@ -18,6 +18,7 @@ export default function FormDialog() {
   const [data, setData] = useState([]);
   const [alertData, setAlertData] = useState(0);
 
+  const [dopen, setDOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,7 +26,7 @@ export default function FormDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-  const [dopen, setDOpen] = useState(false);
+ 
 
   const handleDClickOpen = () => {
     setDOpen(true);
@@ -55,6 +56,7 @@ export default function FormDialog() {
       // alert(JSON.stringify(values, null, 2));
       toStorage(values);
       loadData();
+      handleClose();
     },
   });
   const { handleSubmit, handleChange, errors, handleBlur, touched } = formik;
@@ -109,9 +111,7 @@ export default function FormDialog() {
     if (localData !== null) {
       setData(localData);
     }
-    handleClose();
   };
-
   useEffect(() => {
     
     loadData();
@@ -126,7 +126,7 @@ export default function FormDialog() {
 
     localStorage.setItem('medicine', JSON.stringify(fData))
     loadData();
-    handleDClose()
+    handleDClose();
   }
 
 
