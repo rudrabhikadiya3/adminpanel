@@ -131,9 +131,9 @@ export default function FormDialog() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.email && errors.email ? (
+              {touched.email && errors.email ? 
                 <span className="error">{errors.email}</span>
-              ) : null}
+               : null }
               <TextField
                 name="phone"
                 margin="dense"
@@ -144,9 +144,9 @@ export default function FormDialog() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.phone && errors.phone ? (
+              {touched.phone && errors.phone ? 
                 <span className="error">{errors.phone}</span>
-              ) : null}
+               : null}
               <TextField
                 name="age"
                 margin="dense"
@@ -157,9 +157,9 @@ export default function FormDialog() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.age && errors.age ? (
+              {touched.age && errors.age ? 
                 <span className="error">{errors.age}</span>
-              ) : null}
+               : null}
               <TextField
                 name="doctor"
                 margin="dense"

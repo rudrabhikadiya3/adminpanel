@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as yup from "yup";
-import { useFormik, Form, Formik } from "formik";
+import { useFormik, Form, Formik,  } from "formik";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
@@ -18,6 +18,8 @@ export default function FormDialog() {
   const [data, setData] = useState([]);
   const [alertData, setAlertData] = useState(0);
 
+  const [editData, setEditData] = useState(false)
+
   const [dopen, setDOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,6 +27,8 @@ export default function FormDialog() {
   
   const handleClose = () => {
     setOpen(false);
+    setEditData(false)
+    formik.resetForm();
   };
  
 
@@ -54,12 +58,16 @@ export default function FormDialog() {
     validationSchema: schema,
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
-      toStorage(values);
-      loadData();
       handleClose();
+      if (editData) {
+        updateData(values)
+      } else {
+        toStorage(values);
+      }
+      loadData(values);
     },
   });
-  const { handleSubmit, handleChange, errors, handleBlur, touched } = formik;
+  const { handleSubmit, handleChange, errors, handleBlur, touched, values } = formik;
 
   //to local storage
   const toStorage = (values) => {
@@ -97,7 +105,7 @@ export default function FormDialog() {
           <DeleteIcon />
         </IconButton>
 
-        <IconButton aria-label="edit" onClick={handleDClickOpen} >
+        <IconButton aria-label="edit" onClick={()=>editFormOpen(params)} >
           <EditIcon />
         </IconButton>
         </>
@@ -112,12 +120,13 @@ export default function FormDialog() {
       setData(localData);
     }
   };
+
   useEffect(() => {
     
     loadData();
 
   }, []);
-
+  
   const deletFunction = (params) =>{
     let localData = JSON.parse(localStorage.getItem('medicine'));
     let fData = localData.filter((i) => i.id !==  alertData);
@@ -129,7 +138,30 @@ export default function FormDialog() {
     handleDClose();
   }
 
+  const editFormOpen = (params) =>{
+    handleClickOpen();
+    formik.setValues(params.row);
+    setEditData(true);
+  }
 
+
+  const updateData = (values) =>{
+    let localData = JSON.parse(localStorage.getItem('medicine'));
+    console.log(values);
+
+    const uData = localData.map((nd) => {
+      if (nd.id === values.id) {
+        return values;
+      } else{
+        return nd;
+      }
+    })
+    localStorage.setItem('medicine', JSON.stringify(uData))
+
+    handleClose();
+    loadData();
+    setEditData(false);
+  }
 
   return (
     <div>
@@ -148,7 +180,7 @@ export default function FormDialog() {
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>List medicine</DialogTitle>
-        <Formik>
+        <Formik values={formik}>
           <Form onSubmit={handleSubmit}>
             <DialogContent>
               <TextField
@@ -160,6 +192,7 @@ export default function FormDialog() {
                 variant="standard"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                value = {values.name}
               />
               {touched.name && errors.name ? (
                 <span className="error">{errors.name}</span>
@@ -174,6 +207,7 @@ export default function FormDialog() {
                 variant="standard"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                value = {values.price}
               />
               {touched.price && errors.price ? (
                 <span className="error">{errors.price}</span>
@@ -187,6 +221,7 @@ export default function FormDialog() {
                 variant="standard"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                value = {values.expiry}
               />
               {touched.expiry && errors.expiry ? (
                 <span className="error">{errors.expiry}</span>
@@ -201,19 +236,24 @@ export default function FormDialog() {
                 variant="standard"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                value = {values.quantity}
               />
               {touched.quantity && errors.quantity ? (
                 <span className="error">{errors.quantity}</span>
               ) : null}
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit">Add Medicine</Button>
+                {
+                  editData === true?
+                  <Button type="submit" onClick={() => updateData()}>Change</Button>
+                  :
+                  <Button type="submit">Add</Button>
+                }
               </DialogActions>
             </DialogContent>
           </Form>
         </Formik>
       </Dialog>
-      {/* delet di */}
       <Dialog
         open={dopen}
         // TransitionComponent={Transition}
