@@ -21,6 +21,8 @@ export default function FormDialog() {
   const [editData, setEditData] = useState(false)
 
   const [dopen, setDOpen] = useState(false);
+
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -98,7 +100,7 @@ export default function FormDialog() {
     {
       field: "manage",
       headerName: "Manage",
-      width: 80,
+      width: 100,
       renderCell: (params) => (
         <>
         <IconButton aria-label="delete" onClick={()=>{handleDClickOpen(); setAlertData(params.id)}} >
@@ -127,13 +129,13 @@ export default function FormDialog() {
 
   }, []);
   
-  const deletFunction = (params) =>{
+  const deletFunction = (params) => {
     let localData = JSON.parse(localStorage.getItem('medicine'));
-    let fData = localData.filter((i) => i.id !==  alertData);
+    let fData = localData.filter((i) => i.id !== alertData);
 
-    setData(localData)
+    setData(localData);
 
-    localStorage.setItem('medicine', JSON.stringify(fData))
+    localStorage.setItem('medicine', JSON.stringify(fData));
     loadData();
     handleDClose();
   }
@@ -143,7 +145,6 @@ export default function FormDialog() {
     formik.setValues(params.row);
     setEditData(true);
   }
-
 
   const updateData = (values) =>{
     let localData = JSON.parse(localStorage.getItem('medicine'));
@@ -264,7 +265,7 @@ export default function FormDialog() {
         <DialogTitle>{"Are you sure?"}</DialogTitle>
         <DialogActions>
           <Button onClick={handleDClose}>no</Button>
-          <Button onClick={deletFunction}>yes</Button>
+          <Button onClick={()=>deletFunction()}>yes</Button>
         </DialogActions>
       </Dialog>
     </div>
