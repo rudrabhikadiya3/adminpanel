@@ -10,12 +10,14 @@ import "yup-phone";
 import { useFormik, Form, Formik } from "formik";
 
 import { DataGrid } from "@mui/x-data-grid";
+import { Search } from "@mui/icons-material";
 
 
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([])
+  const [search, setSearch] = useState([])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -79,7 +81,7 @@ export default function FormDialog() {
   };
 
   const listdata = () =>{
-    const localData = JSON.parse(localStorage.getItem('patients'));
+    let localData = JSON.parse(localStorage.getItem('patients'));
     if (localData !== null) {
       setData(localData)
     }
@@ -96,13 +98,33 @@ export default function FormDialog() {
     { field: "age", headerName: "Age", width: 150 },
     { field: "doctor", headerName: "Doctor name", width: 150 },
   ];
-  
 
+  const handleSearch = (val) => {
+    let localdata = JSON.parse(localStorage.getItem("patients"))
+    let searchData = localdata.filter((d) => 
+      d.name.toLowerCase().includes(val.toLowerCase()) ||
+      d.email.toString().includes(val.toString()) ||
+      d.phone.toString().includes(val.toString()) ||
+      d.age.toString().includes(val.toString()) ||
+      d.doctor.toLowerCase().includes(val.toLowerCase()) 
+    )
+   setSearch(searchData);
+  }
+  const showdata = search.length > 0 ? search : data;
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
         Add patient
       </Button>
+      <TextField
+                name="serch"
+                margin="dense"
+                label="Search"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={(e)=>handleSearch(e.target.value)}
+              />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add patient data</DialogTitle>
         <Formik>
@@ -183,7 +205,7 @@ export default function FormDialog() {
       </Dialog>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={data}
+          rows={showdata}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

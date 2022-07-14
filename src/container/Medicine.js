@@ -203,20 +203,7 @@ export default function FormDialog() {
             />
           </div>
         </div>
-
-        {/* <Button variant="outlined" onClick={handleClickOpen}>
-        List medicine
-      </Button>
-      <TextField
-          margin="dense"
-          name="search"
-          label="Search"
-          type="text"
-          fullWidth
-          variant="standard"
-          onBlur={handleBlur}
-          onChange={(e)=>handleSearch(e.target.value)}
-        /> */}
+        
         <div style={{ height: 400, width: "90%" }}>
           <DataGrid
             rows={filterdata}
