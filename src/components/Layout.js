@@ -107,6 +107,7 @@ export default function Layout({ children }) {
   const menuItems = [
     { label: "medicine", to: "/medicine", icon: <MedicationIcon /> },
     { label: "patients", to: "/patients", icon: <AccessibilityIcon /> },
+    { label: "counter", to: "/counter", icon: <AccessibilityIcon /> },
   ];
 
   return (
@@ -167,7 +168,6 @@ export default function Layout({ children }) {
                       justifyContent: "center",
                     }}
                   >
-                    {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
                     {text.icon}
                   </ListItemIcon>
                   <ListItemText
