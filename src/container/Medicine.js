@@ -14,6 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import { autocompleteClasses } from "@mui/material";
 
+import { useSelector } from 'react-redux';
+
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
@@ -182,10 +184,15 @@ export default function FormDialog() {
   };
 
   let filterdata = filterData.length > 0 ? filterData : data;
+
+
+
+
+  const importD = useSelector(state=>state.counter)
   return (
     <div className="container">
       <div className="row">
-        <h1>Medicine</h1>
+        <h1>Medicine {importD.counter}</h1>
         <div className="d-flex mb-4 align-items-center">
           <div className="col-6">
             <Button variant="outlined" onClick={handleClickOpen}>

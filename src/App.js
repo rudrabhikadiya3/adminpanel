@@ -7,6 +7,7 @@ import Patients from './container/Patients';
 import Layout from './components/Layout';
 import { Provider } from 'react-redux';
 import configureStore from './redux/store';
+import Counter from './container/Counter';
 
 function App() {
   const store = configureStore()
@@ -17,6 +18,7 @@ function App() {
         <Switch>
           <Route path={'/medicine'} exact component={Medicine}/>
           <Route path={'/patients'} exact component={Patients}/>
+          <Route path={'/counter'} exact component={Counter}/>
         </Switch>
       </Layout>
       </Provider>

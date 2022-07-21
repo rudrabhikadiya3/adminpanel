@@ -1,4 +1,4 @@
-import {INCREMENT, DECREMENT} from '../reducer/ActionType'
+import {INCREMENT, DECREMENT} from '../reducer/ActionType';
  
 export const increment = () => (dispatch) =>{
     dispatch({ type : INCREMENT})
