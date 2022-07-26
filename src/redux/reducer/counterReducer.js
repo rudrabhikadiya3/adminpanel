@@ -4,7 +4,6 @@ const initVal = {
     counter: 0,
 };
 
-console.log();
 export const counterReducer = (state = initVal, action) => {
     switch(action.type){
         case ActionType.INCREMENT:

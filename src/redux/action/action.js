@@ -1,8 +1,8 @@
 import {INCREMENT, DECREMENT} from '../reducer/ActionType';
  
-export const increment = () => (dispatch) =>{
+export const increment = () => (dispatch) => {
     dispatch({ type : INCREMENT})
 }
-export const decrement = () => (dispatch) =>{
+export const decrement = () => (dispatch) => {
     dispatch({ type : DECREMENT})
 }

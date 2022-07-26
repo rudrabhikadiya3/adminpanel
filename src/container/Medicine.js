@@ -14,7 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import { autocompleteClasses } from "@mui/material";
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getMedicine } from "../redux/action/medicine.action";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
@@ -130,10 +131,6 @@ export default function FormDialog() {
     }
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
   const deletFunction = (params) => {
     let localData = JSON.parse(localStorage.getItem("medicine"));
     let fData = localData.filter((i) => i.id !== alertData);
@@ -185,7 +182,12 @@ export default function FormDialog() {
 
   let filterdata = filterData.length > 0 ? filterData : data;
 
-
+  const dispatch = useDispatch()
+  const medData = useSelector(state=>state.medicine)
+  useEffect(() => {
+    // loadData();
+    dispatch(getMedicine())
+  }, []);
 
 
   const importD = useSelector(state=>state.counter)
@@ -212,7 +214,7 @@ export default function FormDialog() {
         </div>
         <div style={{ height: 400, width: "90%" }}>
           <DataGrid
-            rows={filterdata}
+            rows={medData.medicine}
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
