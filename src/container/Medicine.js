@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import { autocompleteClasses } from "@mui/material";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { getMedicine } from "../redux/action/medicine.action";
 
 export default function FormDialog() {
@@ -182,136 +182,146 @@ export default function FormDialog() {
 
   let filterdata = filterData.length > 0 ? filterData : data;
 
-  const dispatch = useDispatch()
-  const medData = useSelector(state=>state.medicine)
+  const dispatch = useDispatch();
+  const medData = useSelector((state) => state.medicine);
   useEffect(() => {
     // loadData();
-    dispatch(getMedicine())
+    dispatch(getMedicine());
   }, []);
 
-
-  const importD = useSelector(state=>state.counter)
+  const importD = useSelector((state) => state.counter);
+  console.log(medData.error)
   return (
-    <div className="container">
-      <div className="row">
-        <h1>Medicine {importD.counter}</h1>
-        <div className="d-flex mb-4 align-items-center">
-          <div className="col-6">
-            <Button variant="outlined" onClick={handleClickOpen}>
-              List medicine
-            </Button>
-          </div>
-          <div className="col-4">
-            <TextField
-            className="d-block"
-              // margin="dense"
-              name="search"
-              label="Search"
-              type="text"
-              onChange={(e) => handleSearch(e.target.value)}
-            />
+    <>
+      {medData.isLoading ? 
+        <p className="text-center">Loading...</p>
+       : 
+
+       medData.error !== '' ?
+       
+       <p>{medData.error}</p>
+       :
+        <div className="container">
+          <div className="row">
+            <h1>Medicine {importD.counter}</h1>
+            <div className="d-flex mb-4 align-items-center">
+              <div className="col-6">
+                <Button variant="outlined" onClick={handleClickOpen}>
+                  List medicine
+                </Button>
+              </div>
+              <div className="col-4">
+                <TextField
+                  className="d-block"
+                  name="search"
+                  label="Search"
+                  type="text"
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+              </div>
+            </div>
+            <div style={{ height: 400, width: "90%" }}>
+              <DataGrid
+                rows={medData.medicine}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+              />
+            </div>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>List medicine</DialogTitle>
+              <Formik values={formik}>
+                <Form onSubmit={handleSubmit}>
+                  <DialogContent>
+                    <TextField
+                      margin="dense"
+                      name="name"
+                      label="Name"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.name}
+                    />
+                    {touched.name && errors.name ? (
+                      <span className="error">{errors.name}</span>
+                    ) : null}
+
+                    <TextField
+                      margin="dense"
+                      name="price"
+                      label="Price"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.price}
+                    />
+                    {touched.price && errors.price ? (
+                      <span className="error">{errors.price}</span>
+                    ) : null}
+                    <TextField
+                      margin="dense"
+                      name="expiry"
+                      label="Expiry"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.expiry}
+                    />
+                    {touched.expiry && errors.expiry ? (
+                      <span className="error">{errors.expiry}</span>
+                    ) : null}
+
+                    <TextField
+                      margin="dense"
+                      name="quantity"
+                      label="Quantity"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.quantity}
+                    />
+                    {touched.quantity && errors.quantity ? (
+                      <span className="error">{errors.quantity}</span>
+                    ) : null}
+                    <DialogActions>
+                      <Button onClick={handleClose}>Cancel</Button>
+                      {editData === true ? (
+                        <Button type="submit" onClick={() => updateData()}>
+                          Change
+                        </Button>
+                      ) : (
+                        <Button type="submit">Add</Button>
+                      )}
+                    </DialogActions>
+                  </DialogContent>
+                </Form>
+              </Formik>
+            </Dialog>
+            <Dialog
+              open={dopen}
+              // TransitionComponent={Transition}
+              keepMounted
+              onClose={handleClose}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>{"Are you sure?"}</DialogTitle>
+              <DialogActions>
+                <Button onClick={handleDClose}>no</Button>
+                <Button onClick={deletFunction}>yes</Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
-        <div style={{ height: 400, width: "90%" }}>
-          <DataGrid
-            rows={medData.medicine}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-          />
-        </div>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>List medicine</DialogTitle>
-          <Formik values={formik}>
-            <Form onSubmit={handleSubmit}>
-              <DialogContent>
-                <TextField
-                  margin="dense"
-                  name="name"
-                  label="Name"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                />
-                {touched.name && errors.name ? (
-                  <span className="error">{errors.name}</span>
-                ) : null}
-
-                <TextField
-                  margin="dense"
-                  name="price"
-                  label="Price"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.price}
-                />
-                {touched.price && errors.price ? (
-                  <span className="error">{errors.price}</span>
-                ) : null}
-                <TextField
-                  margin="dense"
-                  name="expiry"
-                  label="Expiry"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.expiry}
-                />
-                {touched.expiry && errors.expiry ? (
-                  <span className="error">{errors.expiry}</span>
-                ) : null}
-
-                <TextField
-                  margin="dense"
-                  name="quantity"
-                  label="Quantity"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.quantity}
-                />
-                {touched.quantity && errors.quantity ? (
-                  <span className="error">{errors.quantity}</span>
-                ) : null}
-                <DialogActions>
-                  <Button onClick={handleClose}>Cancel</Button>
-                  {editData === true ? (
-                    <Button type="submit" onClick={() => updateData()}>
-                      Change
-                    </Button>
-                  ) : (
-                    <Button type="submit">Add</Button>
-                  )}
-                </DialogActions>
-              </DialogContent>
-            </Form>
-          </Formik>
-        </Dialog>
-        <Dialog
-          open={dopen}
-          // TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle>{"Are you sure?"}</DialogTitle>
-          <DialogActions>
-            <Button onClick={handleDClose}>no</Button>
-            <Button onClick={deletFunction}>yes</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    </div>
+      }
+    </>
   );
 }

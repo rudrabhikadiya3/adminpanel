@@ -1,10 +1,10 @@
 
 import * as ActionTypes from './ActionType';
 
-
 const initVal = {
     isLoading: false,
-    medicine: []
+    medicine: [],
+    error: ''
 }
 
 export const medicineReducer = (state= initVal, action) =>{
@@ -13,12 +13,25 @@ export const medicineReducer = (state= initVal, action) =>{
             return{
                 ...state,
                 isLoading: false,
-                medicine: action.payload
+                medicine: action.payload,
+                error: '',
+            }
+            break;
+        case ActionTypes.LOADING_DATA:
+            return{
+                ...state,
+                isLoading: true,
+                error: '',
+            }
+            break;
+        case ActionTypes.MED_ERROR:
+            return{
+                ...state,
+                isLoading: false,
+                error: action.payload,
             }
             break;
     
         default: return state;
     }
 }
-
-
