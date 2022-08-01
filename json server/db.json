@@ -1,12 +1,70 @@
 {
   "medicine": [
-    { "id": 101, "name": "Red", "price": 199, "expiry": 2021, "quantity": 70 },
-    { "id": 102, "name": "Yellow", "price": 299, "expiry": 2022, "quantity": 80 },
-    { "id": 103, "name": "White", "price": 499, "expiry": 2025, "quantity": 20 },
-    { "id": 104, "name": "Green", "price": 799, "expiry": 2021, "quantity": 30 },
-    { "id": 105, "name": "Pink", "price": 99, "expiry": 2026, "quantity": 40  }
-
+    {
+      "id": 101,
+      "name": "Red",
+      "price": 199,
+      "expiry": 2021,
+      "quantity": 70
+    },
+    {
+      "id": 102,
+      "name": "Yellow",
+      "price": 299,
+      "expiry": 2022,
+      "quantity": 80
+    },
+    {
+      "id": 103,
+      "name": "White",
+      "price": 499,
+      "expiry": 2025,
+      "quantity": 20
+    },
+    {
+      "id": 104,
+      "name": "Green",
+      "price": 799,
+      "expiry": 2021,
+      "quantity": 30
+    },
+    {
+      "id": 105,
+      "name": "Pink",
+      "price": 99,
+      "expiry": 2026,
+      "quantity": 40
+    },
+    {
+      "id": 305,
+      "name": "WWW",
+      "price": "210",
+      "expiry": "1",
+      "quantity": "100"
+    },
+    {
+      "id": 410,
+      "name": "NEW",
+      "price": "210",
+      "expiry": "2025",
+      "quantity": "223"
+    },
+    {
+      "id": 258,
+      "name": "TEST",
+      "price": "210",
+      "expiry": "1",
+      "quantity": "100"
+    }
   ],
-  "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
-  "profile": { "name": "typicode" }
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
 }

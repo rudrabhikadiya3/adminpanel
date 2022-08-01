@@ -5,7 +5,7 @@ export const getMedicine = () => (dispatch) => {
     dispatch(loadMed())
 
     setTimeout(function() {
-        fetch("http://localhost:3000//medicine")
+        fetch("http://localhost:3006/medicine")
         .then(response => {
             if (response.ok) {
               return response;
@@ -34,3 +34,27 @@ export const loadMed = () => (dispatch) =>{
 export const errMed = (error) => (dispatch) =>{
     dispatch({type: ActionType.MED_ERROR, payload: error})
 }
+
+export const getData = (data) => (dispatch) => {
+ try {
+  fetch("http://localhost:3006/medicine", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    // console.log('Success:', data);
+    dispatch({type: ActionType.ADD_DATA, payload: data})
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+ 
+ } catch (error){
+
+ }
+}
+getData();
