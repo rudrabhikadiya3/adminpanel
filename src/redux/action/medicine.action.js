@@ -35,6 +35,7 @@ export const getMedicine = () => (dispatch) => {
 export const loadMed = () => (dispatch) => {
   dispatch({ type: ActionType.LOADING_DATA });
 };
+
 export const errMed = (error) => (dispatch) => {
   dispatch({ type: ActionType.MED_ERROR, payload: error });
 };
@@ -91,3 +92,25 @@ export const apiDelete = (id) => (dispatch) => {
     dispatch(errMed(error.message))
   }
 };
+
+export const editMed = (data) => (dispatch) => {
+  console.log(data);
+  try {
+    fetch("http://localhost:3006/medicine/" + data.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: ActionType.EDT_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  } catch (error) {
+    dispatch(errMed(error.message))
+  }
+}

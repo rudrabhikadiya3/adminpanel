@@ -15,7 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { autocompleteClasses } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { apiDelete, getData, getMedicine } from "../redux/action/medicine.action";
+import { apiDelete, editMed, getData, getMedicine } from "../redux/action/medicine.action";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
@@ -152,16 +152,16 @@ export default function FormDialog() {
   };
 
   const updateData = (values) => {
-    let localData = JSON.parse(localStorage.getItem("medicine"));
-    const uData = localData.map((nd) => {
-      if (nd.id === values.id) {
-        return values;
-      } else {
-        return nd;
-      }
-    });
-    localStorage.setItem("medicine", JSON.stringify(uData));
-
+    // let localData = JSON.parse(localStorage.getItem("medicine"));
+    // const uData = localData.map((nd) => {
+    //   if (nd.id === values.id) {
+    //     return values;
+    //   } else {
+    //     return nd;
+    //   }
+    // });
+    // localStorage.setItem("medicine", JSON.stringify(uData));
+    dispatch(editMed(values))
     handleClose();
     loadData();
     setEditData(false);

@@ -44,6 +44,19 @@ export const medicineReducer = (state= initVal, action) =>{
                 medicine: state.medicine.filter((m) => m.id !== action.payload),
             }
             break;
+        case ActionTypes.EDT_DATA:
+            return{
+                ...state,
+                isLoading: false,
+                medicine: state.medicine.map((m) => {
+                    if (m.id === action.payload.id ) {
+                        return action.payload
+                    } else {
+                      return m   
+                    }
+                }),
+            }
+            break;
     
         default: return state;
     }

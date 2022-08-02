@@ -1,5 +1,27 @@
 {
-  "medicine": [],
+  "medicine": [
+    {
+      "id": 73,
+      "name": "AAA",
+      "price": "210",
+      "expiry": "34",
+      "quantity": "1"
+    },
+    {
+      "id": 201,
+      "name": "QWERT",
+      "price": "149",
+      "expiry": "2026",
+      "quantity": "100"
+    },
+    {
+      "id": 754,
+      "name": "SSS",
+      "price": "210",
+      "expiry": "2025",
+      "quantity": "245"
+    }
+  ],
   "comments": [
     {
       "id": 1,
