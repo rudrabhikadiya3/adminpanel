@@ -6,7 +6,6 @@ const initVal = {
     medicine: [],
     error: ''
 }
-
 export const medicineReducer = (state= initVal, action) =>{
     switch (action.type) {
         case ActionTypes.GET_DATA:
@@ -36,6 +35,13 @@ export const medicineReducer = (state= initVal, action) =>{
                 ...state,
                 isLoading: false,
                 medicine: state.medicine.concat(action.payload),
+            }
+            break;
+        case ActionTypes.DEL_DATA:
+            return{
+                ...state,
+                isLoading: false,
+                medicine: state.medicine.filter((m) => m.id !== action.payload),
             }
             break;
     

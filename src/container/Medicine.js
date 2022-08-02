@@ -15,7 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { autocompleteClasses } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getData, getMedicine } from "../redux/action/medicine.action";
+import { apiDelete, getData, getMedicine } from "../redux/action/medicine.action";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
@@ -84,7 +84,7 @@ export default function FormDialog() {
       ...values,
     };
 
-    dispatch(getData(withIdData))
+    dispatch(getData(withIdData));
 
     // if (localData === null) {
     //   localStorage.setItem("medicine", JSON.stringify([withIdData]));
@@ -133,13 +133,14 @@ export default function FormDialog() {
     }
   };
 
-  const deletFunction = (params) => {
-    let localData = JSON.parse(localStorage.getItem("medicine"));
-    let fData = localData.filter((i) => i.id !== alertData);
+  const deletFunction = () => {
+    // let localData = JSON.parse(localStorage.getItem("medicine"));
+    // let fData = localData.filter((i) => i.id !== alertData);
 
-    setData(localData);
+    // setData(localData);
 
-    localStorage.setItem("medicine", JSON.stringify(fData));
+    // localStorage.setItem("medicine", JSON.stringify(fData));
+    dispatch(apiDelete(alertData))
     loadData();
     handleDClose();
   };
@@ -152,8 +153,6 @@ export default function FormDialog() {
 
   const updateData = (values) => {
     let localData = JSON.parse(localStorage.getItem("medicine"));
-    console.log(values);
-
     const uData = localData.map((nd) => {
       if (nd.id === values.id) {
         return values;
@@ -192,17 +191,13 @@ export default function FormDialog() {
   }, []);
 
   const importD = useSelector((state) => state.counter);
-  console.log(medData.error)
   return (
     <>
-      {medData.isLoading ? 
+      {medData.isLoading ? (
         <p className="text-center">Loading...</p>
-       : 
-
-       medData.error !== '' ?
-       
-       <p>{medData.error}</p>
-       :
+      ) : medData.error !== "" ? (
+        <p>{medData.error}</p>
+      ) : (
         <div className="container">
           <div className="row">
             <h1>Medicine {importD.counter}</h1>
@@ -323,7 +318,7 @@ export default function FormDialog() {
             </Dialog>
           </div>
         </div>
-      }
+      )}
     </>
   );
 }
