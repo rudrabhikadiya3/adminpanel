@@ -61,12 +61,12 @@ export default function FormDialog() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      handleClose();
       if (editData) {
         updateData(values);
       } else {
         toStorage(values);
       }
+      handleClose();
       loadData(values);
     },
   });
@@ -292,7 +292,7 @@ export default function FormDialog() {
                     <DialogActions>
                       <Button onClick={handleClose}>Cancel</Button>
                       {editData === true ? (
-                        <Button type="submit" onClick={() => updateData()}>
+                        <Button type="submit">
                           Change
                         </Button>
                       ) : (

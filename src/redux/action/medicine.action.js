@@ -1,3 +1,4 @@
+import { BASE_URL } from "../../shared/base_url";
 import * as ActionType from "../reducer/ActionType";
 
 export const getMedicine = () => (dispatch) => {
@@ -5,7 +6,7 @@ export const getMedicine = () => (dispatch) => {
     dispatch(loadMed());
 
     setTimeout(function () {
-      fetch("http://localhost:3006/medicine")
+      fetch(BASE_URL + "medicine")
         .then(
           (response) => {
             if (response.ok) {
@@ -42,7 +43,7 @@ export const errMed = (error) => (dispatch) => {
 
 export const getData = (data) => (dispatch) => {
   try {
-    fetch("http://localhost:3006/medicine", {
+    fetch(BASE_URL + "medicine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +64,7 @@ export const getData = (data) => (dispatch) => {
 
 export const apiDelete = (id) => (dispatch) => {
   try {
-    fetch("http://localhost:3006/medicine/" + id, {
+    fetch(BASE_URL + "medicine" + id, {
       method: "DELETE",
     })
     .then(
@@ -96,7 +97,7 @@ export const apiDelete = (id) => (dispatch) => {
 export const editMed = (data) => (dispatch) => {
   console.log(data);
   try {
-    fetch("http://localhost:3006/medicine/" + data.id, {
+    fetch(BASE_URL + "medicine/" + data.id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +106,7 @@ export const editMed = (data) => (dispatch) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch({ type: ActionType.EDT_DATA, payload: data });
+        dispatch({ type: ActionType.EDT_DATA, payload: data});
       })
       .catch((error) => {
         console.error("Error:", error);
