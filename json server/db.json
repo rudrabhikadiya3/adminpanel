@@ -1,5 +1,20 @@
 {
-  "medicine": [],
+  "medicine": [
+    {
+      "id": 187,
+      "name": "AAA",
+      "price": "32",
+      "expiry": "2022",
+      "quantity": "1000"
+    },
+    {
+      "id": 376,
+      "name": "XXS",
+      "price": "32",
+      "expiry": "11",
+      "quantity": "200"
+    }
+  ],
   "comments": [
     {
       "id": 1,
