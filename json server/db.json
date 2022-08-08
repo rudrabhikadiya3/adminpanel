@@ -7,6 +7,49 @@
     { "id": 105, "name": "Pink", "price": 99, "expiry": 2026, "quantity": 40  }
 
   ],
-  "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
+  "patients": [
+    
+      {
+          "id": 371,
+          "name": "da",
+          "email": "xvb@hjgsdaf.sd",
+          "phone": "8632514785",
+          "age": 23,
+          "doctor": "dr qwdxs"
+      },
+      {
+          "id": 126,
+          "name": "sa",
+          "email": "rtuy@hjgsdaf.sd",
+          "phone": "9632514785",
+          "age": 23,
+          "doctor": "dr wrae"
+      },
+      {
+          "id": 356,
+          "name": "fa",
+          "email": "kfgjhsdgh@hjgsdaf.sd",
+          "phone": "9632514785",
+          "age": 23,
+          "doctor": "dr sdfsdf"
+      },
+      {
+          "id": 456,
+          "name": "fc",
+          "email": "sdfgsfg@hjgsdaf.sd",
+          "phone": "9632514785",
+          "age": 23,
+          "doctor": "dr sdfsdf"
+      },
+      {
+          "id": 234,
+          "name": "ass",
+          "email": "sdfgsd@hjgsdaf.sd",
+          "phone": "9632514785",
+          "age": 23,
+          "doctor": "dr sdafsdf"
+      }
+  
+  ],
   "profile": { "name": "typicode" }
 }

@@ -10,6 +10,9 @@ import "yup-phone";
 import { useFormik, Form, Formik } from "formik";
 
 import { DataGrid } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { getPatient } from "../redux/action/patient.action";
+import { StarTwoTone } from "@mui/icons-material";
 
 
 
@@ -76,18 +79,21 @@ export default function FormDialog() {
         localData.push(dataWithId);
         localStorage.setItem('patients', JSON.stringify(localData));
       }
-  };
-
+    };
+    
+    const dispatch = useDispatch();
   const listdata = () =>{
-    const localData = JSON.parse(localStorage.getItem('patients'));
-    if (localData !== null) {
-      setData(localData)
-    }
+    // const localData = JSON.parse(localStorage.getItem('patients'));
+    // if (localData !== null) {
+    //   setData(localData)
+    // }
+    dispatch(getPatient())
   }
   useEffect(() =>{
     listdata();
+    
   }, [])
-  
+  const pd = useSelector(state => state.pts)
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 150 },
@@ -97,6 +103,8 @@ export default function FormDialog() {
     { field: "doctor", headerName: "Doctor name", width: 150 },
   ];
   
+
+
 
   return (
     <>
@@ -183,7 +191,7 @@ export default function FormDialog() {
       </Dialog>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={data}
+          rows={pd.patient}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
