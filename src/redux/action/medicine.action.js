@@ -1,34 +1,41 @@
+import { GetAllMedicine } from "../../common/APIs/medicine.api";
+import { BASE_URL } from "../../shared/baseURL";
 import * as ActionType from "../reducer/ActionType";
+
 
 export const getMedicine = () => (dispatch) => {
   try {
     dispatch(loadMed());
 
     setTimeout(function () {
-      fetch("http://localhost:3006/medicine")
-        .then(
-          (response) => {
-            if (response.ok) {
-              return response;
-            } else {
-              var error = new Error(
-                "ERROR " + response.status + ": " + response.statusText
-              );
-              error.response = response;
-              throw error;
-            }
-          },
-          (error) => {
-            var errmess = new Error(error.message);
-            throw errmess;
-          }
-        )
-        .then((response) => response.json())
-        .then((data) => dispatch({ type: ActionType.GET_DATA, payload: data }))
-        .catch((error) => dispatch(errMed(error.message)));
+      GetAllMedicine()
+      .then((data) => dispatch({ type: ActionType.GET_DATA, payload: data.data}))
+      .catch((error) => dispatch(errMed(error.message)));
+      
+      // fetch("http://localhost:3006/medicine")
+      //   .then(
+      //     (response) => {
+      //       if (response.ok) {
+      //         return response;
+      //       } else {
+      //         var error = new Error(
+      //           "ERROR " + response.status + ": " + response.statusText
+      //         );
+      //         error.response = response;
+      //         throw error;
+      //       }
+      //     },
+      //     (error) => {
+      //       var errmess = new Error(error.message);
+      //       throw errmess;
+      //     }
+      //   )
+      //   .then((response) => response.json())
+      //   .then((data) => dispatch({ type: ActionType.GET_DATA, payload: data }))
+      //   .catch((error) => dispatch(errMed(error.message)));
     }, 2000);
-  }  catch (error) {
-    dispatch(errMed(error.message))
+  } catch (error) {
+    dispatch(errMed(error.message));
   }
 };
 
@@ -57,7 +64,7 @@ export const getData = (data) => (dispatch) => {
         console.error("Error:", error);
       });
   } catch (error) {
-    dispatch(errMed(error.message))
+    dispatch(errMed(error.message));
   }
 };
 
@@ -66,30 +73,30 @@ export const apiDelete = (id) => (dispatch) => {
     fetch("http://localhost:3006/medicine/" + id, {
       method: "DELETE",
     })
-    .then(
-      (response) => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error(
-            "ERROR " + response.status + ": " + response.statusText
-          );
-          error.response = response;
-          throw error;
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error(
+              "ERROR " + response.status + ": " + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
         }
-      },
-      (error) => {
-        var errmess = new Error(error.message);
-        throw errmess;
-      }
-    )
-    .then((response) => response.json())
-    .then( dispatch({ type: ActionType.DEL_DATA, payload: id }))
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+      )
+      .then((response) => response.json())
+      .then(dispatch({ type: ActionType.DEL_DATA, payload: id }))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   } catch (error) {
-    dispatch(errMed(error.message))
+    dispatch(errMed(error.message));
   }
 };
 
@@ -111,6 +118,6 @@ export const editMed = (data) => (dispatch) => {
         console.error("Error:", error);
       });
   } catch (error) {
-    dispatch(errMed(error.message))
+    dispatch(errMed(error.message));
   }
-}
+};
