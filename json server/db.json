@@ -2,10 +2,10 @@
   "medicine": [
     {
       "id": 73,
-      "name": "AAAx",
-      "price": "210",
-      "expiry": "34",
-      "quantity": "1"
+      "name": "AAAAxx",
+      "price": "34",
+      "expiry": "2323",
+      "quantity": "900"
     },
     {
       "id": 201,
@@ -20,9 +20,30 @@
       "price": "210",
       "expiry": "2025",
       "quantity": "245"
+    },
+    {
+      "id": 778,
+      "name": "asd",
+      "price": "149",
+      "expiry": "11",
+      "quantity": "1000"
+    },
+    {
+      "id": 135,
+      "name": "sdfg454",
+      "price": "149",
+      "expiry": "34",
+      "quantity": "900"
+    },
+    {
+      "id": 655,
+      "name": "aaa",
+      "price": "1",
+      "expiry": "2",
+      "quantity": "3"
     }
   ],
-  "comments": [
+  "patients": [
     {
       "id": 1,
       "body": "some comment",

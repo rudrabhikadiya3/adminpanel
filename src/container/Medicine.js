@@ -12,10 +12,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
-import { autocompleteClasses } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { apiDelete, editMed, getData, getMedicine } from "../redux/action/medicine.action";
+import { apiDelete, editMed, postData, getMedicine } from "../redux/action/medicine.action";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
@@ -84,7 +83,7 @@ export default function FormDialog() {
       ...values,
     };
 
-    dispatch(getData(withIdData));
+    dispatch(postData(withIdData));
 
     // if (localData === null) {
     //   localStorage.setItem("medicine", JSON.stringify([withIdData]));
@@ -292,7 +291,7 @@ export default function FormDialog() {
                     <DialogActions>
                       <Button onClick={handleClose}>Cancel</Button>
                       {editData === true ? (
-                        <Button type="submit" onClick={() => updateData()}>
+                        <Button type="submit">
                           Change
                         </Button>
                       ) : (

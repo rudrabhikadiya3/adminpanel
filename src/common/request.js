@@ -16,3 +16,38 @@ export const getMedicine = (path) => {
     url: path,
   });
 };
+
+export const postReq = (path, data) => {
+  return reqMedicine({
+    method: "POST",
+    url: path,
+    data: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+  });
+};
+
+export const deletReq = (path, id) =>{
+    return reqMedicine({
+      method: "DELET",
+      url: path + id,
+    
+    })
+}
+
+export const putReq = (path, data) => {
+  return reqMedicine({
+    method: "PUT",
+    url: path + data.id,
+    data: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+  });
+};
+
+
+
