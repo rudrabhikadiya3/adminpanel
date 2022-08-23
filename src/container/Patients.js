@@ -10,12 +10,12 @@ import "yup-phone";
 import { useFormik, Form, Formik } from "formik";
 
 import { DataGrid } from "@mui/x-data-grid";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { getPatient } from "../redux/action/patients.action";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,7 +53,6 @@ export default function FormDialog() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       handleClose();
       dataInLocal(values);
       listdata();
@@ -61,33 +60,30 @@ export default function FormDialog() {
   });
   const { handleBlur, handleChange, handleSubmit, touched, errors } = formik;
 
-
   const dataInLocal = (values) => {
     const localData = JSON.parse(localStorage.getItem("patients"));
 
-    const id = Math.floor(Math.random()*1000);
+    const id = Math.floor(Math.random() * 1000);
     let dataWithId = {
       id: id,
-      ...values
-    }
-      if (localData === null) {
-        localStorage.setItem('patients',JSON.stringify([dataWithId]));
-      } else {
-        localData.push(dataWithId);
-        localStorage.setItem('patients', JSON.stringify(localData));
-      }
-  };
+      ...values,
+    };
 
-  const listdata = () =>{
-    const localData = JSON.parse(localStorage.getItem('patients'));
-    if (localData !== null) {
-      setData(localData)
-    }
-  }
-  useEffect(() =>{
+    // if (localData === null) {
+    //   localStorage.setItem('patients',JSON.stringify([dataWithId]));
+    // } else {
+    //   localData.push(dataWithId);
+    //   localStorage.setItem('patients', JSON.stringify(localData));
+    // }
+  };
+  const dispatch = useDispatch();
+  const listdata = () => {
+    dispatch(getPatient());
+  };
+  useEffect(() => {
     listdata();
-  }, [])
-  
+  }, []);
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 150 },
@@ -96,8 +92,8 @@ export default function FormDialog() {
     { field: "age", headerName: "Age", width: 150 },
     { field: "doctor", headerName: "Doctor name", width: 150 },
   ];
-  
 
+  const pd = useSelector((state) => state.patient);
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -131,9 +127,9 @@ export default function FormDialog() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.email && errors.email ? 
+              {touched.email && errors.email ? (
                 <span className="error">{errors.email}</span>
-               : null }
+              ) : null}
               <TextField
                 name="phone"
                 margin="dense"
@@ -144,9 +140,9 @@ export default function FormDialog() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.phone && errors.phone ? 
+              {touched.phone && errors.phone ? (
                 <span className="error">{errors.phone}</span>
-               : null}
+              ) : null}
               <TextField
                 name="age"
                 margin="dense"
@@ -157,9 +153,9 @@ export default function FormDialog() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.age && errors.age ? 
+              {touched.age && errors.age ? (
                 <span className="error">{errors.age}</span>
-               : null}
+              ) : null}
               <TextField
                 name="doctor"
                 margin="dense"
@@ -183,7 +179,7 @@ export default function FormDialog() {
       </Dialog>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={data}
+          rows={pd.patient}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

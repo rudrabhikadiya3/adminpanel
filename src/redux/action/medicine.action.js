@@ -17,28 +17,6 @@ export const getMedicine = () => (dispatch) => {
           dispatch({ type: ActionType.GET_DATA, payload: data.data })
         )
         .catch((error) => dispatch(errMed(error.message)));
-
-      // fetch("http://localhost:3006/medicine")
-      //   .then(
-      //     (response) => {
-      //       if (response.ok) {
-      //         return response;
-      //       } else {
-      //         var error = new Error(
-      //           "ERROR " + response.status + ": " + response.statusText
-      //         );
-      //         error.response = response;
-      //         throw error;
-      //       }
-      //     },
-      //     (error) => {
-      //       var errmess = new Error(error.message);
-      //       throw errmess;
-      //     }
-      //   )
-      //   .then((response) => response.json())
-      //   .then((data) => dispatch({ type: ActionType.GET_DATA, payload: data }))
-      //   .catch((error) => dispatch(errMed(error.message)));
     }, 1000);
   } catch (error) {
     dispatch(errMed(error.message));

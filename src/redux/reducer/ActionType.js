@@ -8,3 +8,5 @@ export const EDT_DATA = 'EDT_DATA';
 
 export const LOADING_DATA = "LOADING_DATA"
 export const MED_ERROR = 'MED_ERROR'
+
+export const GET_PAT_DATA = 'GET_PAT_DATA';

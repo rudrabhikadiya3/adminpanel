@@ -2,7 +2,7 @@
   "medicine": [
     {
       "id": 73,
-      "name": "AAAAxx",
+      "name": "AAAAz",
       "price": "34",
       "expiry": "2323",
       "quantity": "900"
@@ -45,9 +45,12 @@
   ],
   "patients": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": 914,
+      "name": "Rudra",
+      "email": "rudra.rnw@gmail.com",
+      "phone": "8866718853",
+      "age": 32,
+      "doctor": "Dr. nihal"
     }
   ],
   "profile": {
