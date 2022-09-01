@@ -2,7 +2,7 @@
   "medicine": [
     {
       "id": 73,
-      "name": "AAAAz",
+      "name": "AAAA",
       "price": "34",
       "expiry": "2323",
       "quantity": "900"
@@ -47,10 +47,50 @@
     {
       "id": 914,
       "name": "Rudra",
-      "email": "rudra.rnw@gmail.com",
+      "email": "rudra.rnw@gmail.coma",
       "phone": "8866718853",
       "age": 32,
       "doctor": "Dr. nihal"
+    },
+    {
+      "id": 865,
+      "name": "Soham Bhikadiya",
+      "email": "rudra.rnw@gmail.com",
+      "phone": "8866718853",
+      "age": 12,
+      "doctor": "Dr. Ramesh"
+    },
+    {
+      "id": 686,
+      "name": "Soham Bhikadiya",
+      "email": "rudra.rnw@gmail.com",
+      "phone": "9898383195",
+      "age": 12,
+      "doctor": "Dr. Ramesh"
+    },
+    {
+      "id": 105,
+      "name": "Soham Bhikadiya",
+      "email": "rudra.rnw@gmail.com",
+      "phone": "8866718853",
+      "age": 21,
+      "doctor": "Dr. nihal"
+    },
+    {
+      "id": 265,
+      "name": "dwfsaedf",
+      "email": "rudra.rnw@gmail.com",
+      "phone": "8866718853",
+      "age": 21,
+      "doctor": "Dr. Rudra Bhikadiya"
+    },
+    {
+      "id": 626,
+      "name": "A",
+      "email": "rudra.rnw@gmail.com",
+      "phone": "8866718853",
+      "age": 32,
+      "doctor": "Dr. Ramesh"
     }
   ],
   "profile": {

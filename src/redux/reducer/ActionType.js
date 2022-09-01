@@ -10,3 +10,8 @@ export const LOADING_DATA = "LOADING_DATA"
 export const MED_ERROR = 'MED_ERROR'
 
 export const GET_PAT_DATA = 'GET_PAT_DATA';
+export const PAT_ERROR = 'PAT_ERROR';
+export const ADD_PAT_DATA = 'ADD_PAT_DATA';
+export const DELETE_PAT_DATA = 'DELETE_PAT_DATA';
+export const EDIT_PAT_DATA = 'EDIT_PAT_DATA';
+

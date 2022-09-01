@@ -25,23 +25,22 @@ export default function FormDialog() {
 
   const [dopen, setDOpen] = useState(false);
   const [filterData, setFilterData] = useState([]);
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
     setEditData(false);
     formik.resetForm();
   };
-
   const handleDClickOpen = () => {
     setDOpen(true);
   };
-
   const handleDClose = () => {
     setDOpen(false);
   };
+
   let schema = yup.object().shape({
     name: yup.string().required("Please enter name"),
     price: yup
@@ -59,6 +58,7 @@ export default function FormDialog() {
       quantity: "",
     },
     validationSchema: schema,
+
     onSubmit: (values) => {
       handleClose();
       if (editData) {
@@ -123,6 +123,11 @@ export default function FormDialog() {
       ),
     },
   ];
+  const editFormOpen = (params) => {
+    handleClickOpen();
+    formik.setValues(params.row);
+    setEditData(true);
+  };
 
   const loadData = () => {
     const localData = JSON.parse(localStorage.getItem("medicine"));
@@ -133,22 +138,12 @@ export default function FormDialog() {
   };
 
   const deletFunction = () => {
-    // let localData = JSON.parse(localStorage.getItem("medicine"));
-    // let fData = localData.filter((i) => i.id !== alertData);
-
-    // setData(localData);
-
-    // localStorage.setItem("medicine", JSON.stringify(fData));
     dispatch(apiDelete(alertData))
     loadData();
     handleDClose();
   };
 
-  const editFormOpen = (params) => {
-    handleClickOpen();
-    formik.setValues(params.row);
-    setEditData(true);
-  };
+
 
   const updateData = (values) => {
     // let localData = JSON.parse(localStorage.getItem("medicine"));
@@ -190,6 +185,7 @@ export default function FormDialog() {
   }, []);
 
   const importD = useSelector((state) => state.counter);
+
   return (
     <>
       {medData.isLoading ? (

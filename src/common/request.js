@@ -25,7 +25,6 @@ export const postReq = (path, data) => {
     headers: {
       "Content-Type": "application/json",
     },
-
   });
 };
 
