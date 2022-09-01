@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as yup from "yup";
 import { useFormik, Form, Formik } from "formik";
@@ -15,6 +14,8 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { useSelector, useDispatch } from "react-redux";
 import { apiDelete, editMed, postData, getMedicine } from "../redux/action/medicine.action";
+
+
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
@@ -76,14 +77,14 @@ export default function FormDialog() {
   const toStorage = (values) => {
     const localData = JSON.parse(localStorage.getItem("medicine"));
 
-    const id = Math.floor(Math.random() * 1000);
+    const id = Math.floor(Math.random() * 1000)
 
     let withIdData = {
       id: id,
       ...values,
     };
 
-    dispatch(postData(withIdData));
+    dispatch(postData(values));
 
     // if (localData === null) {
     //   localStorage.setItem("medicine", JSON.stringify([withIdData]));
@@ -188,6 +189,7 @@ export default function FormDialog() {
     // loadData();
     dispatch(getMedicine());
   }, []);
+
 
   const importD = useSelector((state) => state.counter);
   return (

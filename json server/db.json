@@ -1,13 +1,6 @@
 {
   "medicine": [
     {
-      "id": 73,
-      "name": "AAAAxx",
-      "price": "34",
-      "expiry": "2323",
-      "quantity": "900"
-    },
-    {
       "id": 201,
       "name": "QWERT",
       "price": "149",
@@ -27,20 +20,6 @@
       "price": "149",
       "expiry": "11",
       "quantity": "1000"
-    },
-    {
-      "id": 135,
-      "name": "sdfg454",
-      "price": "149",
-      "expiry": "34",
-      "quantity": "900"
-    },
-    {
-      "id": 655,
-      "name": "aaa",
-      "price": "1",
-      "expiry": "2",
-      "quantity": "3"
     }
   ],
   "patients": [

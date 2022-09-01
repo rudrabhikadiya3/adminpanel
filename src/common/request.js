@@ -31,7 +31,7 @@ export const postReq = (path, data) => {
 
 export const deletReq = (path, id) =>{
     return reqMedicine({
-      method: "DELET",
+      method: "DELETE",
       url: path + id,
     
     })

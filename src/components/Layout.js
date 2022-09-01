@@ -20,6 +20,7 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MedicationIcon from "@mui/icons-material/Medication";
 import AccessibilityIcon from "@mui/icons-material/Accessibility";
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import { NavLink } from "react-router-dom";
 
 
@@ -107,7 +108,7 @@ export default function Layout({ children }) {
   const menuItems = [
     { label: "medicine", to: "/medicine", icon: <MedicationIcon /> },
     { label: "patients", to: "/patients", icon: <AccessibilityIcon /> },
-    { label: "counter", to: "/counter", icon: <AccessibilityIcon /> },
+    { label: "counter", to: "/counter", icon: <HourglassBottomIcon /> },
   ];
 
   return (
