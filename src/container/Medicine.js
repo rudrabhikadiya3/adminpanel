@@ -96,7 +96,7 @@ export default function FormDialog() {
 
   // table
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    // { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "Name", width: 200 },
     { field: "price", headerName: "Price", width: 80 },
     { field: "expiry", headerName: "Expiry", width: 80 },
@@ -185,6 +185,7 @@ export default function FormDialog() {
 
   const dispatch = useDispatch();
   const medData = useSelector((state) => state.medicine);
+  console.log(medData.medicine);
   useEffect(() => {
     // loadData();
     dispatch(getMedicine());

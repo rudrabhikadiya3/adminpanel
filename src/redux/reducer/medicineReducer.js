@@ -7,7 +7,6 @@ const initVal = {
     error: ''
 }
 export const medicineReducer = (state= initVal, action) =>{
-    console.log(action.type, action.payload);
     switch (action.type) {
         case ActionTypes.GET_DATA:
             return{
@@ -16,35 +15,30 @@ export const medicineReducer = (state= initVal, action) =>{
                 medicine: action.payload,
                 error: '',
             }
-            break;
         case ActionTypes.LOADING_DATA:
             return{
                 ...state,
                 isLoading: true,
                 error: '',
             }
-            break;
         case ActionTypes.MED_ERROR:
             return{
                 ...state,
                 isLoading: false,
                 error: action.payload,
             }
-            break;
         case ActionTypes.ADD_DATA:
             return{
                 ...state,
                 isLoading: false,
                 medicine: state.medicine.concat(action.payload),
             }
-            break;
         case ActionTypes.DEL_DATA:
             return{
                 ...state,
                 isLoading: false,
                 medicine: state.medicine.filter((m) => m.id !== action.payload),
             }
-            break;
         case ActionTypes.EDT_DATA:
             return{
                 ...state,
@@ -57,8 +51,6 @@ export const medicineReducer = (state= initVal, action) =>{
                     }
                 }),
             }
-            break;
-    
         default: return state;
     }
 }
