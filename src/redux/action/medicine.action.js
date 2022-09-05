@@ -5,72 +5,64 @@ import {
   GetAllMedicine,
 } from "../../common/APIs/medicine.api";
 
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import * as ActionType from "../reducer/ActionType";
 import { db } from "../../firebase";
 
-// read Data
+// READ
 export const getMedicine = () => async (dispatch) => {
-  // try {
-  //   dispatch(loadMed());
-  //   setTimeout(function () {
-  //     GetAllMedicine()
-  //       .then((data) =>
-  //         dispatch({ type: ActionType.GET_DATA, payload: data.data })
-  //       )
-  //       .catch((error) => dispatch(errMed(error.message)));
-  //   }, 1000);
-  // } catch (error) {
-  //   dispatch(errMed(error.message));
-  // }
-
-  let data = []
+  let data = [];
   const querySnapshot = await getDocs(collection(db, "medicine"));
   querySnapshot.forEach((doc) => {
-    data.push({id: doc.id, ...doc.data()})
+    data.push({ id: doc.id, ...doc.data() });
   });
-    dispatch({type : ActionType.GET_DATA, payload : data})
+  dispatch({ type: ActionType.GET_DATA, payload: data });
 };
-
+// CREATE
 export const postData = (data) => async (dispatch) => {
   try {
     const docRef = await addDoc(collection(db, "medicine"), data);
-    dispatch({ type: ActionType.ADD_DATA, payload: {id: docRef.id, ...data} });
+    dispatch({
+      type: ActionType.ADD_DATA,
+      payload: { id: docRef.id, ...data },
+    });
   } catch (error) {
     dispatch(errMed(error.message));
   }
+};
+// DELETE
+export const apiDelete = (id) => async (dispatch) => {
+  try {
+    await deleteDoc(doc(db, "medicine", id));
+    dispatch({ type: ActionType.DEL_DATA, payload: id });
+  } catch (error) {
+    console.log(error);
+  }
+};
+// UPDATE
+export const editMed = (data) => async (dispatch) => {
+  const medicineRef = doc(db, "medicine", data.id);
+
+  await updateDoc(medicineRef, {
+    expiry: data.expiry,
+    name: data.name,
+    price: data.price,
+    quantity: data.quantity,
+  });
+  dispatch({ type: ActionType.EDT_DATA, payload: data });
 };
 
-export const apiDelete = (id) => (dispatch) => {
-  try {
-    deletMedicine(id)
-      .then(dispatch({ type: ActionType.DEL_DATA, payload: id }))
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  } catch (error) {
-    dispatch(errMed(error.message));
-  }
-};
-
-export const editMed = (data) => (dispatch) => {
-  try {
-    editMedicine(data)
-      .then((data) => {
-        dispatch({ type: ActionType.EDT_DATA, payload: data.data });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  } catch (error) {
-    dispatch(errMed(error.message));
-  }
-};
 
 export const loadMed = () => (dispatch) => {
   dispatch({ type: ActionType.LOADING_DATA });
 };
-
 export const errMed = (error) => (dispatch) => {
   dispatch({ type: ActionType.MED_ERROR, payload: error });
 };

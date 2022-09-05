@@ -152,15 +152,6 @@ export default function FormDialog() {
   };
 
   const updateData = (values) => {
-    // let localData = JSON.parse(localStorage.getItem("medicine"));
-    // const uData = localData.map((nd) => {
-    //   if (nd.id === values.id) {
-    //     return values;
-    //   } else {
-    //     return nd;
-    //   }
-    // });
-    // localStorage.setItem("medicine", JSON.stringify(uData));
     dispatch(editMed(values))
     handleClose();
     loadData();
@@ -185,7 +176,6 @@ export default function FormDialog() {
 
   const dispatch = useDispatch();
   const medData = useSelector((state) => state.medicine);
-  console.log(medData.medicine);
   useEffect(() => {
     // loadData();
     dispatch(getMedicine());
