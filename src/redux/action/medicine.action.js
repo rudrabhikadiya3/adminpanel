@@ -12,9 +12,11 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  getStorage,
 } from "firebase/firestore";
 import * as ActionType from "../reducer/ActionType";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 // READ
 export const getMedicine = () => async (dispatch) => {
@@ -28,10 +30,19 @@ export const getMedicine = () => async (dispatch) => {
 // CREATE
 export const postData = (data) => async (dispatch) => {
   try {
-    const docRef = await addDoc(collection(db, "medicine"), data);
-    dispatch({
-      type: ActionType.ADD_DATA,
-      payload: { id: docRef.id, ...data },
+
+    const imgRef = ref(storage, `medicine/${data.img.name}`);
+
+    uploadBytes(imgRef, data.img).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(async (url) => {
+
+        const docRef = await addDoc(collection(db, "medicine"),{ ...data, img: url});
+        dispatch({
+          type: ActionType.ADD_DATA,
+          payload: { id: docRef.id, ...data, img: url },
+        });
+
+      });
     });
   } catch (error) {
     dispatch(errMed(error.message));
@@ -58,7 +69,6 @@ export const editMed = (data) => async (dispatch) => {
   });
   dispatch({ type: ActionType.EDT_DATA, payload: data });
 };
-
 
 export const loadMed = () => (dispatch) => {
   dispatch({ type: ActionType.LOADING_DATA });

@@ -13,9 +13,12 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { useSelector, useDispatch } from "react-redux";
-import { apiDelete, editMed, postData, getMedicine } from "../redux/action/medicine.action";
-
-
+import {
+  apiDelete,
+  editMed,
+  postData,
+  getMedicine,
+} from "../redux/action/medicine.action";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
@@ -51,6 +54,7 @@ export default function FormDialog() {
       .positive("price cant be in negative"),
     expiry: yup.string().required("Please enter expiry"),
     quantity: yup.string().required("Please enter quantity"),
+    img: yup.mixed().required("Please choose image"),
   });
   const formik = useFormik({
     initialValues: {
@@ -58,6 +62,7 @@ export default function FormDialog() {
       price: "",
       expiry: "",
       quantity: "",
+      img: ""
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -70,14 +75,14 @@ export default function FormDialog() {
       loadData(values);
     },
   });
-  const { handleSubmit, handleChange, errors, handleBlur, touched, values } =
+  const { handleSubmit, handleChange, errors, handleBlur, touched, values , setFieldValue} =
     formik;
 
   //to local storage
   const toStorage = (values) => {
     const localData = JSON.parse(localStorage.getItem("medicine"));
 
-    const id = Math.floor(Math.random() * 1000)
+    const id = Math.floor(Math.random() * 1000);
 
     let withIdData = {
       id: id,
@@ -140,7 +145,7 @@ export default function FormDialog() {
     // setData(localData);
 
     // localStorage.setItem("medicine", JSON.stringify(fData));
-    dispatch(apiDelete(alertData))
+    dispatch(apiDelete(alertData));
     loadData();
     handleDClose();
   };
@@ -152,7 +157,7 @@ export default function FormDialog() {
   };
 
   const updateData = (values) => {
-    dispatch(editMed(values))
+    dispatch(editMed(values));
     handleClose();
     loadData();
     setEditData(false);
@@ -180,7 +185,6 @@ export default function FormDialog() {
     // loadData();
     dispatch(getMedicine());
   }, []);
-
 
   const importD = useSelector((state) => state.counter);
   return (
@@ -281,12 +285,21 @@ export default function FormDialog() {
                     {touched.quantity && errors.quantity ? (
                       <span className="error">{errors.quantity}</span>
                     ) : null}
+                    <TextField
+                      margin="dense"
+                      name="img"
+                      type="file"
+                      fullWidth
+                      variant="standard"
+                      onChange={(e) => setFieldValue("img", e.target.files[0])}
+                    />
+                    {touched.img && errors.img ? (
+                      <span className="error">{errors.img}</span>
+                    ) : null}
                     <DialogActions>
                       <Button onClick={handleClose}>Cancel</Button>
                       {editData === true ? (
-                        <Button type="submit">
-                          Change
-                        </Button>
+                        <Button type="submit">Change</Button>
                       ) : (
                         <Button type="submit">Add</Button>
                       )}
