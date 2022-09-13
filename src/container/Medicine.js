@@ -62,7 +62,7 @@ export default function FormDialog() {
       price: "",
       expiry: "",
       quantity: "",
-      img: ""
+      img: "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -75,8 +75,15 @@ export default function FormDialog() {
       loadData(values);
     },
   });
-  const { handleSubmit, handleChange, errors, handleBlur, touched, values , setFieldValue} =
-    formik;
+  const {
+    handleSubmit,
+    handleChange,
+    errors,
+    handleBlur,
+    touched,
+    values,
+    setFieldValue,
+  } = formik;
 
   //to local storage
   const toStorage = (values) => {
@@ -90,13 +97,6 @@ export default function FormDialog() {
     };
 
     dispatch(postData(values));
-
-    // if (localData === null) {
-    //   localStorage.setItem("medicine", JSON.stringify([withIdData]));
-    // } else {
-    //   localData.push(withIdData);
-    //   localStorage.setItem("medicine", JSON.stringify(localData));
-    // }
   };
 
   // table
@@ -107,6 +107,12 @@ export default function FormDialog() {
     { field: "expiry", headerName: "Expiry", width: 80 },
     { field: "quantity", headerName: "Quantity", width: 80 },
     {
+      field: "img",
+      headerName: "Image",
+      width: 80,
+      renderCell: (params) => <img src={params.row.img} height={50} width={50} />,
+    },
+    {
       field: "manage",
       headerName: "Manage",
       width: 80,
@@ -116,7 +122,7 @@ export default function FormDialog() {
             aria-label="delete"
             onClick={() => {
               handleDClickOpen();
-              setAlertData(params.id);
+              setAlertData(params.row);
             }}
           >
             <DeleteIcon />
@@ -139,12 +145,7 @@ export default function FormDialog() {
   };
 
   const deletFunction = () => {
-    // let localData = JSON.parse(localStorage.getItem("medicine"));
-    // let fData = localData.filter((i) => i.id !== alertData);
-
-    // setData(localData);
-
-    // localStorage.setItem("medicine", JSON.stringify(fData));
+    
     dispatch(apiDelete(alertData));
     loadData();
     handleDClose();
@@ -310,7 +311,6 @@ export default function FormDialog() {
             </Dialog>
             <Dialog
               open={dopen}
-              // TransitionComponent={Transition}
               keepMounted
               onClose={handleClose}
               aria-describedby="alert-dialog-slide-description"

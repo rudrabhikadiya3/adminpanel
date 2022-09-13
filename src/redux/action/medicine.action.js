@@ -16,7 +16,12 @@ import {
 } from "firebase/firestore";
 import * as ActionType from "../reducer/ActionType";
 import { db, storage } from "../../firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
 // READ
 export const getMedicine = () => async (dispatch) => {
@@ -30,29 +35,42 @@ export const getMedicine = () => async (dispatch) => {
 // CREATE
 export const postData = (data) => async (dispatch) => {
   try {
-
-    const imgRef = ref(storage, `medicine/${data.img.name}`);
+    const randomNum = Math.floor(Math.random() * 100000).toString();
+    const imgRef = ref(storage, `medicine/${randomNum}`);
 
     uploadBytes(imgRef, data.img).then((snapshot) => {
       getDownloadURL(snapshot.ref).then(async (url) => {
-
-        const docRef = await addDoc(collection(db, "medicine"),{ ...data, img: url});
-        dispatch({
-          type: ActionType.ADD_DATA,
-          payload: { id: docRef.id, ...data, img: url },
+        const docRef = await addDoc(collection(db, "medicine"), {
+          ...data,
+          img: url,
+          fileName: randomNum,
         });
-
+        dispatch({
+          type: ActionType.ADD_DATA, payload: { id: docRef.id, ...data, img: url },});
       });
     });
+
   } catch (error) {
     dispatch(errMed(error.message));
   }
 };
 // DELETE
-export const apiDelete = (id) => async (dispatch) => {
+export const apiDelete = (data) => async (dispatch) => {
   try {
-    await deleteDoc(doc(db, "medicine", id));
-    dispatch({ type: ActionType.DEL_DATA, payload: id });
+    console.log(data);
+    
+
+    const medicineRef = ref(storage, `medicine/${data.fileName}`);
+
+   
+    deleteObject(medicineRef)
+      .then(async() => {
+        await deleteDoc(doc(db, "medicine", data.id));
+        dispatch({ type: ActionType.DEL_DATA, payload: data.id });
+      })
+      .catch((error) => {
+        dispatch(errMed(error.message));
+      });
   } catch (error) {
     console.log(error);
   }
